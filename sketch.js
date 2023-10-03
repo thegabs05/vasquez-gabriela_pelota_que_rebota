@@ -1,30 +1,39 @@
-let posX, posY, diam, rad;
-let esp = 50;
-let margen = 40;
-let piso;
-let velY = 0;
-let acel = 0.98;
+// let posX, posY, diam, rad;
+// let esp = 50;
+// let margen = 40;
+// let piso;
+// let velY = 0;
+// let acel = 0.98;
+let pelota1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  posX = windowWidth / 2;
-  posY = windowHeight * 0.2;
-  rectMode(CENTER);
-  //frameRate(35);
-  diam = random(10, 50);
-  rad = diam / 2;
-  piso = windowHeight - margen - esp / 2;
+  pelota1 = new pelotarebota(
+    windowWidth / 2,
+    windowHeight * 0.2,
+    random(10, 50),
+    this.diam / 2,
+    50,
+    40,
+    windowHeight - this.margen - this.esp / 2,
+    0,
+    0.98
+  );
+
+  // posX = windowWidth / 2;
+  // posY = windowHeight * 0.2;
+  // rectMode(CENTER);
+  // // //frameRate(35);
+  // diam = random(10, 50);
+  // rad = diam / 2;
+  // piso = windowHeight - margen - esp / 2;
 }
 
 function draw() {
-  background(0, 220, 210, 50);
-
-  update();
-
-  noStroke();
-
+  // background(0, 220, 210, 50);
+  // update();
+  // noStroke();
   //posY += velY;
-
   //if (posY > piso - rad) {
   //  print("se choco");
   //  velY *= -1;
@@ -33,21 +42,56 @@ function draw() {
   //  print("arriba");
   //  velY *= -1;
   // }
-  fill(255);
-  circle(posX, posY, diam);
-
-  fill(255, 0, 0);
-  rect(windowWidth / 2, windowHeight - margen, windowWidth, esp);
+  // fill(255);
+  // circle(posX, posY, diam);
+  // fill(255, 0, 0);
+  // rect(windowWidth / 2, windowHeight - margen, windowWidth, esp);
+  pelota1.update();
+  pelota1.display();
 }
 
 function update() {
-  velY += acel;
-  posY += velY;
+  // velY += acel;
+  // posY += velY;
+  // if (posY >= piso - rad) {
+  //   //posY = piso - rad;
+  //   //print("se choco");
+  //   velY *= -1;
+  //   posY += velY;
+  // }
+}
 
-  if (posY >= piso - rad) {
-    //posY = piso - rad;
-    //print("se choco");
-    velY *= -1;
-    posY += velY;
+class pelotarebota {
+  constructor(_posX, _posY, _diam, _rad, _esp, _margen, _piso, _velY, _acel) {
+    this.posX = _posX;
+    this.posY = _posY;
+    this.diam = _diam;
+    this.rad = _rad;
+    this.esp = _esp;
+    this.margen = _margen;
+    this.piso = _piso;
+    this.velY = _velY;
+    this.acel = _acel;
+  }
+
+  update() {
+    this.velY += this.acel;
+    this.posY += this.velY;
+    if (this.posY >= this.piso - this.rad) {
+      this.posY = this.piso - this.rad;
+      this.velY *= -1;
+      this.posY += this.velY;
+    }
+  }
+
+  display() {
+    background(0, 220, 210, 50);
+    noStroke();
+    rectMode(CENTER);
+
+    fill(255);
+    circle(this.posX, this.posY, this.diam);
+    fill(255, 0, 0);
+    rect(windowWidth / 2, windowHeight - this.margen, windowWidth, this.esp);
   }
 }

@@ -8,17 +8,7 @@ let pelota1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  pelota1 = new pelotarebota(
-    windowWidth / 2,
-    windowHeight * 0.2,
-    random(10, 50),
-    this.diam / 2,
-    50,
-    40,
-    windowHeight - this.margen - this.esp / 2,
-    0,
-    0.98
-  );
+  pelota1 = new pelotarebota(windowWidth / 2, windowHeight * 0.2);
 
   // posX = windowWidth / 2;
   // posY = windowHeight * 0.2;
@@ -62,16 +52,16 @@ function update() {
 }
 
 class pelotarebota {
-  constructor(_posX, _posY, _diam, _rad, _esp, _margen, _piso, _velY, _acel) {
+  constructor(_posX, _posY) {
     this.posX = _posX;
     this.posY = _posY;
-    this.diam = _diam;
-    this.rad = _rad;
-    this.esp = _esp;
-    this.margen = _margen;
-    this.piso = _piso;
-    this.velY = _velY;
-    this.acel = _acel;
+    this.diam = random(10, 50);
+    this.rad = this.diam / 2;
+    this.esp = 50;
+    this.margen = 40;
+    this.piso = windowHeight - this.margen - this.esp / 2;
+    this.velY = 0;
+    this.acel = 0.98;
   }
 
   update() {
@@ -80,7 +70,6 @@ class pelotarebota {
     if (this.posY >= this.piso - this.rad) {
       this.posY = this.piso - this.rad;
       this.velY *= -1;
-      this.posY += this.velY;
     }
   }
 
